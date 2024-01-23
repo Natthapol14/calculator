@@ -36,11 +36,14 @@ class MainActivity : AppCompatActivity() {
         val dot: Button = findViewById(R.id.dot)
         val equal: Button = findViewById(R.id.equal)
 
+        // สร้าง Global
         var currentNumber = "0"
         var number1 =""
         var number2 =""
         var otext =""
         var doot:Boolean = false
+
+        // ณ จุดนี้ คือ การเขียนเพื่อกำหนด ปุ้มต่างๆว่ามีหน้าที่ทำอะไร
 
         Cd.setOnClickListener {
             currentNumber = "0"
@@ -165,6 +168,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        //ตรงนี้คือการ กำหนดปุุ้มที่ต้องทำหน้าที่ เช่น การบวก และอื่นๆ
         plus.setOnClickListener {
             otext = "+"
             number1 = currentNumber
@@ -205,33 +209,29 @@ class MainActivity : AppCompatActivity() {
             doot = false
         }
 
+        //การกดเท่ากับ
         equal.setOnClickListener {
             number2 = currentNumber
             var result = 0.0
-            try {
-                when (otext) {
+
+            when (otext) {
 
                     "+" -> result = number1.toDouble() + number2.toDouble()
                     "-" -> result = number1.toDouble() - number2.toDouble()
                     "*" -> result = number1.toDouble() * number2.toDouble()
-                    "/" -> {
-                        if (number2.toDouble() == 0.0) {
-                            textview1.text = "Error: Division by zero"
-                        } else {
-                            result = number1.toDouble() / number2.toDouble()
-                        }
-                    }
+                    "/" -> result = number1.toDouble() / number2.toDouble()
                     "%" -> result = number1.toDouble() % number2.toDouble()
                 }
+                if(result.toString() == "Infinity" ) {
+                    textview1.text = "Error: Division by zero"
+                }else {
+                    textview1.text = result.toString() // Display the result
+                }
 
-                textview1.text = result.toString() // Display the result
-            } catch (e: NumberFormatException) {
-                textview1.text = "Error: Invalid input"
-            }
 
+//นำค่า result มาทำการคำนวณเพิ่ม เนื่องจากตอนแรก มันเอา number 2 มา +กับ ค่าที่พิมพ์ล่าสุด เราจึงต้อง เก็บค่า result ให้เป็น number1 เพื่อที่จะนำมา + กับ number 2
             number1 = result.toString()
             currentNumber = result.toString()
-
         }
     }
 
